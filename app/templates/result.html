@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado</title>
+</head>
+<body>
+
+    <center>
+    <p style="font-size: 70px">
+        <b>
+            Análisis Exploratorio de Datos
+        </b>   
+    </p>
+    </center>
+    <h2>
+        <p style="text-align:center">
+            Distribución de variables numéricas
+        </p>
+    </h2>
+    
+    <div style="text-align: center;">
+        <image src="{{ url_for('static', filename='Histograma.jpg') }}" border="10"></image>
+    </div>
+    <h2>
+        <p style="text-align:center">
+            Identificación de relaciones entre pares variables
+        </p>
+    </h2>
+    <div style="text-align: center;">
+        <image src="{{ url_for('static', filename='Correlaciones.jpg') }}" border="10"></image>
+    </div>
+    <div style="text-align: center;">
+        <image src="{{ url_for('static', filename='prueba.jpg') }}" border="10"></image>
+    </div>
+    
+    <br>
+    <center>
+    <p style="font-size: 30px">
+        <a href="/">Página Principal</a>
+    </p>
+    </center>
+</body>
+</html>
