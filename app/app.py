@@ -84,10 +84,10 @@ def pca():
     return render_template('pca.html')
 
 @app.route('/ADecision', methods=["GET", "POST"])
-def menu():
+def ADecision():
     img_path="app/static/"
     datosData2=pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
-    return render_template('menu.html')
+    return render_template('ADecision.html')
 
 if __name__=='__main__':
     app.run(debug=True, port=5000)
