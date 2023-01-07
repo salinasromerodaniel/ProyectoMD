@@ -16,7 +16,6 @@ LinkDeData = LinkData()
 
 @app.route('/')
 def index():
-    #return "Hola puto David"
     return render_template('index.html')
 
 
@@ -46,7 +45,7 @@ def predict():
     sns.heatmap(CorrData, cmap='RdBu_r', annot=True, mask=MatrizInf)
     plt.savefig(img_path+'prueba.jpg')
 
-    
+    plt.clf()
     for col in datosData.select_dtypes(include='object'):
         if datosData[col].nunique()<10:sns.countplot(y=col, data=datosData)
         plt.savefig(img_path+'categoricas1.jpg')
@@ -62,12 +61,21 @@ def pca():
     MatrizInf = np.triu(CorrData1)
     sns.heatmap(CorrData1, cmap='RdBu_r', annot=True, mask=MatrizInf)
     plt.savefig(img_path+'CorrPCA.jpg')
+    plt.clf()
+    
+    Estandarizar = StandardScaler()                               # Se instancia el objeto StandardScaler o MinMaxScaler 
+    MEstandarizada = Estandarizar.fit_transform(datosData1)
+    pd.DataFrame(MEstandarizada, columns=datosData1.columns)
+    pca = PCA(n_components=9)     #Se instancia el objeto PCA    #pca=PCA(n_components=None), pca=PCA(.85)
+    pca.fit(MEstandarizada)
+    Varianza = pca.explained_variance_ratio_
 
-    plt.plot(np.cumsum(pca.explained_variance_ratio_))
+    
+    plt.plot(np.cumsum(Varianza))
     plt.xlabel('Número de componentes')
     plt.ylabel('Varianza acumulada')
     plt.grid()
-    plt.savefig(img_path+'VarianzaAcumPCA.jpg')
+    plt.savefig(img_path+'VarianzaAcumPCA1.jpg')
     
     return render_template('pca.html')
 
