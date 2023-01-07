@@ -77,7 +77,17 @@ def pca():
     plt.grid()
     plt.savefig(img_path+'VarianzaAcumPCA1.jpg')
     
+    plt.clf()
+    sns.pairplot(datosData1, hue='comprar')
+    plt.savefig(img_path+'Visual.jpg')
+
     return render_template('pca.html')
+
+@app.route('/ADecision', methods=["GET", "POST"])
+def menu():
+    img_path="app/static/"
+    datosData2=pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    return render_template('menu.html')
 
 if __name__=='__main__':
     app.run(debug=True, port=5000)
