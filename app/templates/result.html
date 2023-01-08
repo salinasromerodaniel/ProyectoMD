@@ -14,7 +14,23 @@
             Análisis Exploratorio de Datos
         </b>   
     </p>
+    <form action = "{{ url_for('VerLaData') }}" method="POST">
+        <input type = "submit" value = "Ver La Data">
+    </form>
+    <form action = "{{ url_for('TiposDeDatos') }}" method="POST">
+        <input type = "submit" value = "Tipos de Datos">
+    </form>
+    <form action = "{{ url_for('Nulos') }}" method="POST">
+        <input type = "submit" value = "Datos Nulos">
+    </form>
+    <form action = "{{ url_for('ResumenEstadistico') }}" method="POST">
+        <input type = "submit" value = "Resumen de Datos Estadísticos">
+    </form>
+    <form action = "{{ url_for('DistribucionCat') }}" method="POST">
+        <input type = "submit" value = "Distribución de variables categóricas">
+    </form>
     </center>
+    
     <h2>
         <p style="text-align:center">
             Distribución de variables numéricas
@@ -29,6 +45,12 @@
             Identificación de relaciones entre pares variables
         </p>
     </h2>
+    <center>
+        <form action = "{{ url_for('MatrizCorr1') }}" method="POST">
+            <input type = "submit" value = "Matriz de correlaciones">
+        </form>
+    </center>
+    
     <div style="text-align: center;">
         <image src="{{ url_for('static', filename='Correlaciones.jpg') }}" border="10"></image>
     </div>

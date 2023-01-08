@@ -14,6 +14,7 @@ class LinkData():
 
 LinkDeData = LinkData()
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -63,10 +64,12 @@ def pca():
     plt.savefig(img_path+'CorrPCA.jpg')
     plt.clf()
     
-    Estandarizar = StandardScaler()                               # Se instancia el objeto StandardScaler o MinMaxScaler 
-    MEstandarizada = Estandarizar.fit_transform(datosData1)
-    pd.DataFrame(MEstandarizada, columns=datosData1.columns)
-    pca = PCA(n_components=9)     #Se instancia el objeto PCA    #pca=PCA(n_components=None), pca=PCA(.85)
+    Estandarizar = MinMaxScaler()                               # Se instancia el objeto StandardScaler o MinMaxScaler 
+    NuevaMatriz = datosData1.select_dtypes(exclude=['object'])
+    MEstandarizada = Estandarizar.fit_transform(NuevaMatriz)
+    pd.DataFrame(MEstandarizada, columns=NuevaMatriz.columns)
+    #pca = PCA(n_components=9)     #Se instancia el objeto PCA    #pca=PCA(n_components=None), pca=PCA(.85)
+    pca = PCA(n_components='mle',svd_solver='full')
     pca.fit(MEstandarizada)
     Varianza = pca.explained_variance_ratio_
 
@@ -78,7 +81,7 @@ def pca():
     plt.savefig(img_path+'VarianzaAcumPCA1.jpg')
     
     plt.clf()
-    sns.pairplot(datosData1, hue='comprar')
+    sns.pairplot(datosData1, hue = None )
     plt.savefig(img_path+'Visual.jpg')
 
     return render_template('pca.html')
@@ -88,6 +91,82 @@ def ADecision():
     img_path="app/static/"
     datosData2=pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
     return render_template('ADecision.html')
+
+@app.route('/VerLaData', methods=["GET", "POST"])
+def VerLaData():
+    VerLaData = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    return VerLaData.to_html()
+
+@app.route('/TiposDeDatos', methods=["GET", "POST"])
+def TiposDeDatos():
+    TiposDeDatos = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    Tipos = TiposDeDatos.dtypes.to_frame()
+    
+    return Tipos.to_html()
+
+@app.route('/Nulos', methods=["GET", "POST"])
+def Nulos():
+    Nulos = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    NulosResult = Nulos.isnull().sum().to_frame() 
+    return NulosResult.to_html()
+
+@app.route('/ResumenEstadistico', methods=["GET", "POST"])
+def ResumenEstadistico():
+    ResumenEstadistico = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    ResumenEstadisticoResult = ResumenEstadistico.describe() 
+    return ResumenEstadisticoResult.to_html()
+
+@app.route('/DistribucionCat', methods=["GET", "POST"])
+def DistribucionCat():
+    DistribucionCat = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    DistribucionCatResult = DistribucionCat.describe(include='object') 
+    return DistribucionCatResult.to_html()
+
+@app.route('/MatrizCorr1', methods=["GET", "POST"])
+def MatrizCorr1():
+    MatrizCorr1 = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    MatrizCorr1Result = MatrizCorr1.corr()
+    return MatrizCorr1Result.to_html()
+
+@app.route('/MatrizCorr2', methods=["GET", "POST"])
+def MatrizCorr2():
+    MatrizCorr2 = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    MatrizCorr2Result = MatrizCorr2.corr(method='pearson')
+    return MatrizCorr2Result.to_html()
+
+@app.route('/Estandarizar', methods=["GET", "POST"])
+def Estandarizar():
+    Data2 = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    Estandarizar = StandardScaler()
+    NuevaMatriz = Data2.select_dtypes(exclude=['object'])
+    MEstandarizada = Estandarizar.fit_transform(NuevaMatriz)
+    Matriz = pd.DataFrame(MEstandarizada, columns=NuevaMatriz.columns) 
+    return Matriz.to_html()
+
+@app.route('/Cargas', methods=["GET", "POST"])
+def Cargas():
+    Data2 = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    Estandarizar = StandardScaler()
+    NuevaMatriz = Data2.select_dtypes(exclude=['object'])
+    MEstandarizada = Estandarizar.fit_transform(NuevaMatriz)
+    pca = PCA(n_components='mle',svd_solver='full')
+    pca.fit(MEstandarizada)
+    CargasComponentes = pd.DataFrame(abs(pca.components_), columns=NuevaMatriz.columns)
+    return CargasComponentes.to_html()
+
+@app.route('/pca/GrafDisper', methods=["GET", "POST"])
+def GrafDisper():
+    img_path="app/static/"
+    Data3 = pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    clase1 = request.form['x']
+    clase2 = request.form['y']
+    clase3 = request.form['hist']
+    sns.scatterplot(x=clase1, y =clase2, data=Data3, hue=clase3)
+    plt.title('Gráfico de dispersión')
+    plt.xlabel(clase1)
+    plt.ylabel(clase2)
+    plt.savefig(img_path+'GraficoDisper.jpg')
+    return render_template('GrafDisper.html')
 
 if __name__=='__main__':
     app.run(debug=True, port=5000)
