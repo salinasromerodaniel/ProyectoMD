@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arboles de Decisión</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos.css') }}" />
 </head>
 <body>
 
@@ -19,10 +20,12 @@
         <form action = "{{ url_for('VerLaData') }}" method="POST">
             <input type = "submit" value = "Ver La Data">
         </form>
+        <br>
         <form action = "{{ url_for('ResumenEstadistico') }}" method="POST">
             <input type = "submit" value = "Resumen de Datos Estadísticos">
         </form>
     </center>
+    <br>
     <h2>
         <p style="text-align:center">
             Selección de características
@@ -38,7 +41,9 @@
         </h1>
         <form action = "{{ url_for('ADArbol') }}" method="POST">
             <input type = "text" name = "valorx" placeholder="Dame los valores X"><br>
+            <br>
             <input type = "text" name = "valory" placeholder="Dame el valor Y"><br>
+            <br>
             <input type = "submit" value = "Calcular Modelo">
         </form>
         </center>
@@ -61,9 +66,11 @@
         <form action = "{{ url_for('MatrizClasif') }}" method="POST">
             <input type = "submit" value = "Matriz de Clasificación">
         </form>
+        <br>
         <form action = "{{ url_for('EfiYC') }}" method="POST">
             <input type = "submit" value = "Eficiencia y conformación del Modelo">
         </form>
+        <br>
         <div style="text-align: center;">
             <image src="{{ url_for('static', filename='GrafArbol1.jpg') }}" border="10"></image>
         </div>

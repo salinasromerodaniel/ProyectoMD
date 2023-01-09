@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisis de componentes principales</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos.css') }}" />
 </head>
 <body>
 
@@ -24,25 +25,30 @@
         <form action = "{{ url_for('VerLaData') }}" method="POST">
             <input type = "submit" value = "Ver La Data">
         </form>
+        <br>
         <form action = "{{ url_for('MatrizCorr2') }}" method="POST">
             <input type = "submit" value = "Matriz de correlaciones método Pearson">
         </form>
     </center>
-    
+    <br>
     <div style="text-align: center;">
         <image src="{{ url_for('static', filename='CorrPCA.jpg') }}" border="10"></image>
     </div>
     <center>
+        <br>
         <form action = "{{ url_for('Estandarizar') }}" method="POST">
             <input type = "submit" value = "Matriz de Datos Estandarizados">
         </form>
+        <br>
         <form action = "{{ url_for('EstandarizarN') }}" method="POST">
             <input type = "submit" value = "Matriz de Datos Normalizados">
         </form>
+        <br>
         <form action = "{{ url_for('Cargas') }}" method="POST">
             <input type = "submit" value = "Proporción de relevancia de los datos">
         </form>
     </center>
+    <br>
     <h2>
         <p style="text-align:center">
             Se decide el número de componentes principales

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos.css') }}" />
 </head>
 <body>
     <center>
@@ -14,12 +15,15 @@
     <form action = "{{ url_for('predict') }}" method="POST">
         <input type = "submit" value = "Análisis Exploratorio de Datos">
     </form>
+    <br>
     <form action = "{{ url_for('pca') }}" method="POST">
         <input type = "submit" value = "Análisis de Componentes Principales">
     </form>
+    <br>
     <form action = "{{ url_for('ADecision') }}" method="POST">
         <input type = "submit" value = "Arboles de Decisión y Bosques Aleatorios">
     </form>
+    <br>
     <form action = "{{ url_for('Kmeans') }}" method="POST">
         <input type = "submit" value = "K means">
     </form>

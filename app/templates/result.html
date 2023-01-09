@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos.css') }}" />
 </head>
 <body>
 
@@ -17,15 +18,19 @@
     <form action = "{{ url_for('VerLaData') }}" method="POST">
         <input type = "submit" value = "Ver La Data">
     </form>
+    <br>
     <form action = "{{ url_for('TiposDeDatos') }}" method="POST">
         <input type = "submit" value = "Tipos de Datos">
     </form>
+    <br>
     <form action = "{{ url_for('Nulos') }}" method="POST">
         <input type = "submit" value = "Datos Nulos">
     </form>
+    <br>
     <form action = "{{ url_for('ResumenEstadistico') }}" method="POST">
         <input type = "submit" value = "Resumen de Datos Estadísticos">
     </form>
+    <br>
     <form action = "{{ url_for('DistribucionCat') }}" method="POST">
         <input type = "submit" value = "Distribución de variables categóricas">
     </form>
@@ -50,7 +55,7 @@
             <input type = "submit" value = "Matriz de correlaciones">
         </form>
     </center>
-    
+    <br>
     <div style="text-align: center;">
         <image src="{{ url_for('static', filename='Correlaciones.jpg') }}" border="10"></image>
     </div>
