@@ -15,32 +15,60 @@
         </b>   
     </p>
     </center>
+    <center>
+        <form action = "{{ url_for('VerLaData') }}" method="POST">
+            <input type = "submit" value = "Ver La Data">
+        </form>
+        <form action = "{{ url_for('ResumenEstadistico') }}" method="POST">
+            <input type = "submit" value = "Resumen de Datos Estadísticos">
+        </form>
+    </center>
     <h2>
         <p style="text-align:center">
-            Variables posiblemente correlacionadas
+            Selección de características
         </p>
     </h2>
     
     <div style="text-align: center;">
-        <image src="{{ url_for('static', filename='CorrPCA.jpg') }}" border="10"></image>
+        <image src="{{ url_for('static', filename='ADCorr.jpg') }}" border="10"></image>
     </div>
+    <center>
+        <h1 class="text-center">
+            Variables del modelo
+        </h1>
+        <form action = "{{ url_for('ADArbol') }}" method="POST">
+            <input type = "text" name = "valorx" placeholder="Dame los valores X"><br>
+            <input type = "text" name = "valory" placeholder="Dame el valor Y"><br>
+            <input type = "submit" value = "Calcular Modelo">
+        </form>
+        </center>
     <h2>
         <p style="text-align:center">
-            Se decide el número de componentes principales
+            Árbol de Decisión
         </p>
     </h2>
     <div style="text-align: center;">
-        <image src="{{ url_for('static', filename='VarianzaAcumPCA1.jpg') }}" border="10"></image>
+        <image src="{{ url_for('static', filename='Arbol.jpg') }}" border="10"></image>
     </div>
-    <h2>
-        <p style="text-align:center">
-            Análisis correlacional de datos: Evaluación visual
+    <center>
+        <p style="font-size: 70px">
+            <b>
+                Árboles de Decisión
+            </b>   
         </p>
-    </h2>
-    <div style="text-align: center;">
-        <image src="{{ url_for('static', filename='Visual.jpg') }}" border="10"></image>
-    </div>
-    
+    </center>
+    <center>
+        <form action = "{{ url_for('MatrizClasif') }}" method="POST">
+            <input type = "submit" value = "Matriz de Clasificación">
+        </form>
+        <form action = "{{ url_for('EfiYC') }}" method="POST">
+            <input type = "submit" value = "Eficiencia y conformación del Modelo">
+        </form>
+        <div style="text-align: center;">
+            <image src="{{ url_for('static', filename='GrafArbol1.jpg') }}" border="10"></image>
+        </div>
+
+    </center>
     <br>
     <center>
     <p style="font-size: 30px">
