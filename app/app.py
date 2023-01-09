@@ -10,6 +10,8 @@ from sklearn.tree import plot_tree
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import RocCurveDisplay
+import random as rd
+from math import sqrt
 from sklearn import metrics
 import pandas as pd                    # Para la manipulación y análisis de datos
 import numpy as np                     # Para crear vectores y matrices n dimensionales
@@ -28,6 +30,12 @@ class ModeloY():
     X = None
 
 ValorY = ModeloY()
+
+class Kmean():
+    Y = None
+    X = None
+
+KV = Kmean()
 
 
 @app.route('/')
@@ -100,6 +108,84 @@ def pca():
     plt.savefig(img_path+'Visual.jpg')
 
     return render_template('pca.html')
+
+@app.route('/Kmeans', methods=["GET", "POST"])
+def Kmeans():
+
+    img_path="app/static/"
+    datosData1=pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+
+    #plt.savefig(img_path+'Visual.jpg')
+
+    return render_template('Kmeans.html')
+
+@app.route('/KmeansP', methods=["GET", "POST"])
+def KmeansP():
+    plt.clf()
+    img_path="app/static/"
+    datosData1=pd.read_csv(LinkDeData.link, delimiter=",",index_col=0)
+    DataX = request.form['variablex']
+    DataY = request.form['variabley']
+    X = datosData1[[DataX, DataY]]
+    # Visualize data point
+    plt.scatter(X[DataX], X[DataY], c="blue")
+    plt.xlabel(DataX)
+    plt.ylabel(DataY)
+    plt.savefig(img_path+'DataP.jpg')
+
+    K=3
+    Centroids = (X.sample(n=K))
+    plt.scatter(X[DataX], X[DataY], c="blue")
+    plt.scatter(Centroids[DataX], Centroids[DataY], c="red")
+    plt.xlabel(DataX)
+    plt.ylabel(DataY)
+    plt.savefig(img_path+'DataC.jpg')
+
+    plt.clf()
+    diff = 1
+    j=0
+
+    while(diff!=0):
+        XD=X
+        i=1
+        for index1, row_c in Centroids.iterrows():
+            ED=[]
+            for index2, row_d in XD.iterrows():
+                d1 = (row_c[DataX]-row_d[DataX])**2
+                d2 = (row_c[DataY]-row_d[DataY])**2
+                d = sqrt(d1+d2)
+                ED.append(d)
+            X[i] = ED
+            i = i+1
+        
+        C = []
+        for index, row in X.iterrows():
+            min_dist=row[1]
+            pos=1
+            for i in range(K):
+                if row[i+1] < min_dist:
+                    min_dist = row[i+1]
+                    pos = i+1
+            C.append(pos)
+        X["Cluster"]=C
+        Centroids_new = X.groupby(["Cluster"]).mean()[[DataY, DataX]]
+        if j == 0:
+            diff = 1
+            j = j+1
+        else:
+            diff = (Centroids_new[DataY] - Centroids[DataY]).sum() + (Centroids_new[DataX] - Centroids[DataX]).sum()
+            print(diff.sum())
+        Centroids = X.groupby(["Cluster"]).mean()[[DataY,DataX]]
+    color=['blue','green','cyan']
+    for k in range(K):
+        data=X[X["Cluster"]==k+1]
+        plt.scatter(data[DataX],data[DataY],c=color[k])
+    plt.scatter(Centroids[DataX],Centroids[DataY],c='red')
+    plt.xlabel(DataX)
+    plt.ylabel(DataY)
+    plt.savefig(img_path+'DataF.jpg')
+
+    return render_template('Kmeans.html')
 
 @app.route('/ADecision', methods=["GET", "POST"])
 def ADecision():

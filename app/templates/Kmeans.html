@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K means</title>
+</head>
+<body>
+
+    <center>
+    <p style="font-size: 70px">
+        <b>
+            Algoritmo K means
+        </b>   
+    </p>
+    </center>
+    <center>
+        <form action = "{{ url_for('VerLaData') }}" method="POST">
+            <input type = "submit" value = "Ver La Data">
+        </form>
+        <form action = "{{ url_for('TiposDeDatos') }}" method="POST">
+            <input type = "submit" value = "Tipos de Datos">
+        </form>
+
+        <h1 class="text-center">
+            Variables del modelo
+        </h1>
+        <form action = "{{ url_for('KmeansP') }}" method="POST">
+            <input type = "text" name = "variablex" placeholder="Dame el valor X"><br>
+            <input type = "text" name = "variabley" placeholder="Dame el valor Y"><br>
+            <input type = "submit" value = "Calcular Modelo">
+        </form>
+    </center>
+    
+    <div style="text-align: center;">
+        <image src="{{ url_for('static', filename='DataP.jpg') }}" border="10"></image>
+    </div>
+    <h2>
+        <p style="text-align:center">
+            Se colocan los centroides
+        </p>
+    </h2>
+    <div style="text-align: center;">
+        <image src="{{ url_for('static', filename='DataC.jpg') }}" border="10"></image>
+    </div>
+    <h2>
+        <p style="text-align:center">
+            Clusters con sus centroides
+        </p>
+    </h2>
+    <div style="text-align: center;">
+        <image src="{{ url_for('static', filename='DataF.jpg') }}" border="10"></image>
+    </div>
+
+    
+    <br>
+    <center>
+    <p style="font-size: 30px">
+        <a href="/">Página Principal</a>
+    </p>
+    </center>
+</body>
+</html>
